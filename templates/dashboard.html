@@ -1,0 +1,236 @@
+<!-- =================================================================
+File: templates/dashboard.html
+Project: The Self-Pruning Neural Network
+Description: Futuristic Neon Green Matrix dashboard (FastAPI frontend)
+================================================================= -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Neural Matrix HUD</title>
+    <style>
+        :root {
+            --bg-base: #030a05;
+            --matrix-green: #00ff41;
+            --panel-bg: #06180a;
+            --border-glow: #008f11;
+        }
+        body {
+            background-color: var(--bg-base);
+            color: #e0ffe8;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 30px;
+            animation: bootUp 1.2s ease-out;
+            background-image: linear-gradient(0deg, transparent 24%, rgba(0, 255, 65, 0.03) 25%, rgba(0, 255, 65, 0.03) 26%, transparent 27%, transparent 74%, rgba(0, 255, 65, 0.03) 75%, rgba(0, 255, 65, 0.03) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0, 255, 65, 0.03) 25%, rgba(0, 255, 65, 0.03) 26%, transparent 27%, transparent 74%, rgba(0, 255, 65, 0.03) 75%, rgba(0, 255, 65, 0.03) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+        }
+        @keyframes bootUp { from { opacity: 0; filter: blur(10px); } to { opacity: 1; filter: blur(0px); } }
+        h1 {
+            color: var(--matrix-green);
+            text-align: center;
+            text-shadow: 0 0 15px var(--matrix-green);
+            font-size: 2.8em;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        .metric-card {
+            background-color: var(--panel-bg);
+            border: 2px solid var(--border-glow);
+            box-shadow: inset 0 0 20px rgba(0, 255, 65, 0.1), 0 0 15px rgba(0, 143, 17, 0.4);
+            padding: 25px;
+            border-radius: 4px;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .metric-value {
+            font-size: 2.2em;
+            color: #ffffff;
+            text-shadow: 0 0 10px var(--matrix-green);
+            margin-bottom: 12px;
+        }
+        section {
+            background-color: var(--panel-bg);
+            border-left: 5px solid var(--matrix-green);
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+        .bar-container {
+            width: 100%;
+            background-color: #111;
+            margin: 15px 0;
+            height: 22px;
+            box-shadow: inset 0 0 10px #000;
+        }
+        .bar-fill {
+            height: 100%;
+            background-color: var(--matrix-green);
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.1, 1, 0.3, 1);
+            box-shadow: 0 0 10px var(--matrix-green);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: transparent;
+        }
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-glow);
+            text-align: left;
+        }
+        th { color: var(--matrix-green); text-transform: uppercase; }
+        footer {
+            text-align: center;
+            color: #444;
+            margin-top: 60px;
+            font-size: 0.9em;
+        }
+        input[type="file"]::file-selector-button {
+            border: 2px solid var(--matrix-green);
+            background: var(--panel-bg);
+            color: var(--matrix-green);
+            padding: 12px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        input[type="file"]::file-selector-button:hover {
+            background: var(--matrix-green);
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🌐 Neural Topology Matrix</h1>
+
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-value" id="val-params">LOADING</div>
+            <div>Synaptic Links</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value" id="val-sparsity">LOADING</div>
+            <div>Atrophy Factor</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value" id="val-flops">LOADING</div>
+            <div>Active compute</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value" id="val-comp">LOADING</div>
+            <div>Compression Index</div>
+        </div>
+    </div>
+
+    <section>
+        <h2 style="color:var(--matrix-green); margin-top:0;">> INITIALIZE_TARGET_SCAN()</h2>
+        <input type="file" id="image-upload" accept="image/*">
+        <div id="predictions" style="margin-top:25px;"></div>
+    </section>
+
+    <section>
+        <h2 style="color:var(--matrix-green); margin-top:0;">> PING_GATING_STRUCTURES()</h2>
+        <div id="gate-charts">Fetching spatial topological arrays...</div>
+    </section>
+
+    <section>
+        <h2 style="color:var(--matrix-green); margin-top:0;">> ACCESSED_EXPERIMENT_LOGS()</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>λ Penalty Constraint</th>
+                    <th>Precision Index</th>
+                    <th>Amputation Rate</th>
+                    <th>Runtime Mass</th>
+                    <th>Scale Ratio</th>
+                </tr>
+            </thead>
+            <tbody id="results-table">
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <p>[//SYSTEM SECURED] — Developed strictly for Tredence AI Engineering Intelligence System 2025</p>
+    </footer>
+
+    <script>
+        fetch('/model/info').then(r => r.json()).then(data => {
+            if(data.status && data.status !== 200) return;
+            document.getElementById('val-params').innerText = data.parameters.toLocaleString();
+            document.getElementById('val-sparsity').innerText = data.sparsity.toFixed(2) + '%';
+            document.getElementById('val-flops').innerText = data.gflops.toFixed(4) + 'GF';
+            document.getElementById('val-comp').innerText = data.compression_ratio.toFixed(1) + "x";
+        });
+
+        fetch('/model/gates').then(r => r.json()).then(data => {
+            const container = document.getElementById('gate-charts');
+            container.innerHTML = '';
+            data.forEach(item => {
+                const div = document.createElement('div');
+                div.innerHTML = `
+                    <div style="font-weight:bold; margin-top:15px;">
+                        [Node: ${item.layer_name}] | Status Code: ${item.sparsity.toFixed(1)}% Severed
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-fill" style="width: ${item.sparsity}%"></div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        });
+
+        fetch('/results').then(r => r.json()).then(data => {
+            const tbody = document.getElementById('results-table');
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${Number(row.lambda).toExponential(2)}</td>
+                    <td>${Number(row.test_accuracy).toFixed(2)}%</td>
+                    <td>${Number(row.sparsity_level).toFixed(2)}%</td>
+                    <td>[ ${Number(row.flops_sparse_gflops).toFixed(4)} ]</td>
+                    <td>>> ${Number(row.compression_ratio).toFixed(1)}x</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        });
+
+        const upload = document.getElementById('image-upload');
+        upload.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const b64 = event.target.result;
+                fetch('/predict', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({image_base64: b64, top_k: 3})
+                }).then(r => r.json()).then(res => {
+                    const block = document.getElementById('predictions');
+                    block.innerHTML = '';
+                    res.predictions.forEach(p => {
+                        block.innerHTML += `
+                            <div>TARGET IDENTITY: ${p.class.toUpperCase()} // PROBABILITY BOUNDS: ${p.confidence.toFixed(2)}%</div>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: ${p.confidence}%"></div>
+                            </div>
+                        `;
+                    });
+                });
+            };
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>

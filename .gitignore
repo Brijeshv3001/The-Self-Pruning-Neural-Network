@@ -1,0 +1,23 @@
+# =================================================================
+# File: .gitignore
+# Project: The Self-Pruning Neural Network
+# Description: Explicitly ignores transient artifacts
+# =================================================================
+
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+data/
+*.log
+*.png
+*.gif
+results.csv
+*.pt
+.env
+*.egg-info/
+dist/
+build/
+.vscode/
+.idea/
+venv/
